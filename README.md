@@ -20,3 +20,5 @@ for Python V3.10.2
 for Selenium V4.1.3
 
 for Pillow 9.0.1
+
+any IDE 
