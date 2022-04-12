@@ -100,13 +100,4 @@ def manga_henati(url):
     driver.quit()
 
 
-
-
-
-
-
-
-# manga_henati("https://mangahentai.me/manga-hentai/phone-sex/")
-# manga_henati("https://mangahentai.me/manga-hentai/secret-class-mgh-0015/")
-# manga_henati("https://mangahentai.me/manga-hentai/fathers-lust-mgh-0015/")
-manga_henati("https://mangahentai.me/manga-hentai/sisters-sex-education-mhentai-0013/")
+manga_henati("URL/for/the/specific/manga")
