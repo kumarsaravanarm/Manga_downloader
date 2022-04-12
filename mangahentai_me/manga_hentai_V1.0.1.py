@@ -45,6 +45,7 @@ def manga_henati(url):
             driver.implicitly_wait(1)
 
             manga_images = driver.find_elements(By.XPATH,"//div[@class='page-break no-gaps']/img")
+            image_list = []
 
             for images in manga_images:
                 if images.get_attribute("src") and "https" in images.get_attribute("src"):
@@ -54,8 +55,8 @@ def manga_henati(url):
                 manga_chapter_title = driver.find_element(By.ID,"chapter-heading").text
                 # print(manga_chapter_title)
 
-                if not os.path.exists(os.path.join(manga_title,manga_chapter_title)):
-                    os.makedirs(os.path.join(manga_title,manga_chapter_title))
+                # if not os.path.exists(os.path.join(manga_title,manga_chapter_title)):
+                #     os.makedirs(os.path.join(manga_title,manga_chapter_title))
 
                 try:
                     image_content = requests.get(image_link).content
@@ -65,17 +66,16 @@ def manga_henati(url):
                 try:
                     image_byte = io.BytesIO(image_content)
                     image = Image.open(image_byte)
-                    # file = os.path.join(manga_title,manga_chapter_title,hashlib.sha1(image_content).hexdigest()[:10]+".jpg")
-                    file = os.path.join(manga_title,manga_chapter_title,image_id+".jpg")
-
-                    with open(file,"wb") as f:
-                        
-                        image.save(f,"JPEG")
-                    
-                    print(f"The {manga_chapter_title} manga Download is Completed")
-
+                    image_list.append(image)
                 except Exception as e:
                     print(e)
+                    
+            print(f"The {manga_chapter_title} manga Download is Completed")
+
+            file = os.path.join(manga_title,manga_chapter_title +".pdf")
+            with open(file,"wb") as f:
+                
+                image_list[0].save(f,save_all=True,append_images=image_list[1:])
 
             driver.back()
             driver.implicitly_wait(1)
@@ -99,14 +99,3 @@ def manga_henati(url):
     driver.implicitly_wait(1)
     driver.quit()
 
-
-
-
-
-
-
-
-# manga_henati("https://mangahentai.me/manga-hentai/phone-sex/")
-# manga_henati("https://mangahentai.me/manga-hentai/secret-class-mgh-0015/")
-# manga_henati("https://mangahentai.me/manga-hentai/fathers-lust-mgh-0015/")
-manga_henati("https://mangahentai.me/manga-hentai/sisters-sex-education-mhentai-0013/")
